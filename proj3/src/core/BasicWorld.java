@@ -6,8 +6,8 @@ import tileengine.Tileset;
 
 public class BasicWorld {
 
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 30;
+    private static final int WIDTH = 80;
+    private static final int HEIGHT = 35;
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
@@ -18,7 +18,7 @@ public class BasicWorld {
         TETile[][] world = new TETile[WIDTH][HEIGHT];
         for (int x = 0; x < WIDTH; x++) {
             for (int y = 0; y < HEIGHT; y++) {
-                world[x][y] = Tileset.NOTHING;
+                world[x][y] = Tileset.FLOOR;
             }
         }
 
