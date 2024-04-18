@@ -1,12 +1,7 @@
 package core;
 
-<<<<<<< HEAD
-
-public class Rooms {
-
-=======
+import java.util.List;
 import tileengine.Tileset;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,6 +11,7 @@ public class Rooms {
     private static final int MAXDIMENSION = 12;
 
     public Rooms(int width, int heigth) {
+
     }
 
     public List<Integer> randomRoomDimensions() {
@@ -40,6 +36,4 @@ public class Rooms {
         Random random = new Random();
         return random.nextInt(maxDimension - minDimension) + minDimension;
     }
->>>>>>> 084c3db7aa4465d1e849f50f534ca83cc1294700
-}
 
