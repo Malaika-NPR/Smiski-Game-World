@@ -35,6 +35,7 @@ public class Rooms {
             }
         }
         placeRandomRooms(world);
+        //bottomWallGeneration(world);
         //System.out.println(COORDINATES);
         ter.renderFrame(world);
     }
@@ -43,11 +44,12 @@ public class Rooms {
         Rooms rooms = new Rooms();
         int validRoomCount = 0;
 
-        for (int r = 0; validRoomCount < 2; r++) {
+        for (int r = 0; validRoomCount < 14; r++) {
             rooms.randomRoomDimensions();
             rooms.randomRoomCoordinates();
             if (rooms.roomOverlapChecker(world)) {
                 COORDINATES.removeLast();
+                DIMENSIONS.removeLast();
                 //rooms.randomRoomCoordinates();
             } else if (!rooms.roomOverlapChecker(world)) {
                 validRoomCount+= 1;
@@ -82,6 +84,12 @@ public class Rooms {
                 placeSingleRandomRoom(world);
             }
         }
+<<<<<<< HEAD
+=======
+        wallGeneration(world);
+        System.out.println(DIMENSIONS);
+        System.out.println(CORNERS);
+>>>>>>> 6ad6c8a190b2851d7f51c67af7d51e6788c159f0
     }
 
     public static void placeSingleRandomRoom(TETile[][] world) {
@@ -92,6 +100,34 @@ public class Rooms {
         for (int a = x; a < x + roomWidth; a++) {
             for (int b = y; b < y + roomHeight; b++) {
                 world[a][b] = Tileset.FLOOR;
+            }
+        }
+    }
+
+    public static void wallGeneration(TETile[][] world) {
+        for (int i = 1; i < CORNERS.size() + 1; i++) {
+            //bottom
+            for (int x = CORNERS.get(i).getFirst().get(0) - 1; x <=  ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))); x++) {
+                //System.out.println("Width: " + DIMENSIONS.get(i - 1).getFirst());
+                //System.out.println("Xcoord: " + CORNERS.get(i).getFirst().get(0));
+                //System.out.println("Last: " + ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))));
+                int y = CORNERS.get(i).getFirst().get(1) - 1;
+                world[x][y] = Tileset.WALL;
+            }
+            //top
+            for (int x = CORNERS.get(i).getFirst().get(0) - 1; x <=  ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))); x++) {
+                int y = CORNERS.get(i).getFirst().get(1) + DIMENSIONS.get(i - 1).get(1);
+                world[x][y] = Tileset.WALL;
+            }
+            //left
+            for (int y = CORNERS.get(i).getFirst().get(1); y <  ((DIMENSIONS.get(i - 1).get(1)) + (CORNERS.get(i).getFirst().get(1))); y++) {
+                int x = CORNERS.get(i).getFirst().get(0) - 1;
+                world[x][y] = Tileset.WALL;
+            }
+            //right
+            for (int y = CORNERS.get(i).getFirst().get(1); y <  ((DIMENSIONS.get(i - 1).get(1)) + (CORNERS.get(i).getFirst().get(1))); y++) {
+                int x = CORNERS.get(i).getFirst().get(0) + DIMENSIONS.get(i - 1).get(0);
+                world[x][y] = Tileset.WALL;
             }
         }
     }

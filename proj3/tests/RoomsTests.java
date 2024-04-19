@@ -40,4 +40,10 @@ public class RoomsTests {
     public void placeRandomRoomsTest() {
         placeRandomRooms(world);
     }
+
+    @Test
+    public void bottomWallGenerationTest() {
+        placeRandomRooms(world);
+        wallGeneration(world);
+    }
 }

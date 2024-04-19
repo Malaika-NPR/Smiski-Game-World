@@ -1,4 +1,5 @@
 package core;
+<<<<<<< HEAD
 
 import java.util.Random;
 
@@ -71,3 +72,5 @@ public class Hallways {
 
 
 
+=======
+>>>>>>> 6ad6c8a190b2851d7f51c67af7d51e6788c159f0
