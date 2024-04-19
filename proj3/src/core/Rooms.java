@@ -130,3 +130,20 @@ public class Rooms {
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
     }
 }
+
+//Method to use Hallways in QuickFind in Rooms take points in room1 and room2  and
+//connect those two points in hallway 2
+
+
+
+//Treemap
+//Reference for each room a list of room have a list  of room s and go through each room and a way you
+//can reference it and draw a path of reference point to the rooms
+
+//disjoint set --> still need to a reference which is an arraylist
+// or do a treemap
+
+//choose a lower left corner of each room and make the path that way to a hallway
+
+//First Value of hashmap
+
