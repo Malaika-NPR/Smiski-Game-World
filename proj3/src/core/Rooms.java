@@ -159,7 +159,7 @@ public class Rooms {
 
         //HorizontalHallway Helper
         private void horizontalHelper(int xStart, int xEnd)
-                
+
         //VerticalHallway Helper
         private void verticalHelper(int xStart, int xEnd)
 
