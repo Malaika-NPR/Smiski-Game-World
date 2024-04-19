@@ -41,7 +41,7 @@ public class Rooms {
         Rooms rooms = new Rooms();
         int validRoomCount = 0;
 
-        for (int r = 0; validRoomCount < 14; r++) {
+        for (int r = 0; validRoomCount < 12; r++) {
             rooms.randomRoomDimensions();
             rooms.randomRoomCoordinates();
             if (rooms.roomOverlapChecker(world)) {
@@ -50,6 +50,7 @@ public class Rooms {
                 //rooms.randomRoomCoordinates();
             } else if (!rooms.roomOverlapChecker(world)) {
                 validRoomCount+= 1;
+                //if it alr has a lot of rooms before hitting 14 then we break
                 int roomWidth = DIMENSIONS.getLast().get(0);
                 int roomHeight = DIMENSIONS.getLast().get(1);
                 int currentX = COORDINATES.getLast().get(0);
@@ -132,7 +133,7 @@ public class Rooms {
         int roomWidth = DIMENSIONS.getLast().get(0);
         int roomHeight = DIMENSIONS.getLast().get(1);
 
-        return chosenX + roomWidth > BOARDWIDTH - 2 || chosenY + roomHeight > BOARDHEIGHT - 2; //goes out of bounds
+        return chosenX + roomWidth > BOARDWIDTH - 3 || chosenY + roomHeight > BOARDHEIGHT - 3; //goes out of bounds
     }
 
     public boolean roomOverlapChecker(TETile[][] world) {
@@ -141,8 +142,8 @@ public class Rooms {
         int roomWidth = DIMENSIONS.getLast().get(0);
         int roomHeight = DIMENSIONS.getLast().get(1);
         if (!roomOutBoundsChecker(world)) { //room is not out of bounds
-            for (int a = choosenX - 2; a < choosenX + roomWidth + 2; a++) {
-                for (int b = choosenY - 2; b < choosenY + roomHeight + 2; b++) {
+            for (int a = choosenX - 3; a < choosenX + roomWidth + 3; a++) {
+                for (int b = choosenY - 3; b < choosenY + roomHeight + 3; b++) {
                     if (world[a][b] == Tileset.FLOOR) {
                         return true; //overlap
                     }
