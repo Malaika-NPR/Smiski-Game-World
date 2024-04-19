@@ -1,19 +1,23 @@
 package core;
 
+import org.checkerframework.checker.units.qual.C;
 import tileengine.TERenderer;
 import tileengine.TETile;
 import tileengine.Tileset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 public class Rooms {
-    private static final int MINDIMENSION = 3;
+    private static final int MINDIMENSION = 4;
     private static final int MAXDIMENSION = 13;
-    private static final int BOARDWIDTH = 80;
-    private static final int BOARDHEIGHT = 35;
+    private static final int BOARDWIDTH = 75;
+    private static final int BOARDHEIGHT = 30;
     public static final ArrayList<List<Integer>> COORDINATES = new ArrayList<>();
     public static final ArrayList<List<Integer>> DIMENSIONS = new ArrayList<>();
+    public static final HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>();
+    //hashmap of all the rooms in order as keys and then the 4 corners as values
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
@@ -27,41 +31,59 @@ public class Rooms {
                 world[x][y] = Tileset.FLOWER;
             }
         }
-
         placeRandomRooms(world);
-
-        // draws the world to the screen
+        //System.out.println(COORDINATES);
         ter.renderFrame(world);
     }
 
     public static void placeRandomRooms(TETile[][] world) {
         Rooms rooms = new Rooms();
+        int validRoomCount = 0;
 
-        for (int r = 0; r < 40; r++) {
-            //ArrayList<List<Integer>> rDimensions  = rooms.randomRoomDimensions();
-            //ArrayList<List<Integer>> rCoordinates  = rooms.randomRoomCoordinates();
+        for (int r = 0; validRoomCount < 2; r++) {
             rooms.randomRoomDimensions();
             rooms.randomRoomCoordinates();
-            System.out.println(COORDINATES);
-            System.out.println(DIMENSIONS);
             if (rooms.roomOverlapChecker(world)) {
-                //there is overlap or its out of bounds
-                //replace new coordinates
-                System.out.println("ahhh overlap");
-                //rCoordinates = rooms.randomRoomCoordinates();
                 COORDINATES.removeLast();
-                rooms.randomRoomCoordinates();
+                //rooms.randomRoomCoordinates();
             } else if (!rooms.roomOverlapChecker(world)) {
-                System.out.println("ahhh no overlap");
+                validRoomCount+= 1;
+                int roomWidth = DIMENSIONS.getLast().get(0);
+                int roomHeight = DIMENSIONS.getLast().get(1);
+                int currentX = COORDINATES.getLast().get(0);
+                int currentY = COORDINATES.getLast().get(1);
+                //current coordinates
+                ArrayList<Integer> bottomLeft = new ArrayList<>();
+                bottomLeft.add(currentX);
+                bottomLeft.add(currentY);
+                //top left coordinates
+                ArrayList<Integer> topLeft = new ArrayList<>();
+                topLeft.add(currentX);
+                topLeft.add(currentY + roomHeight - 1);
+                //top right coordinates, diagonal
+                ArrayList<Integer> topRight = new ArrayList<>();
+                topRight.add(currentX + roomWidth - 1);
+                topRight.add(currentY + roomHeight - 1);
+                //bottom right coordinates
+                ArrayList<Integer> bottomRight = new ArrayList<>();
+                bottomRight.add(currentX + roomWidth - 1);
+                bottomRight.add(currentY);
+                //complete corner list
+                ArrayList<List<Integer>> allFourCornerList = new ArrayList<>();
+                allFourCornerList.add(bottomLeft);
+                allFourCornerList.add(topLeft);
+                allFourCornerList.add(topRight);
+                allFourCornerList.add(bottomRight);
+
+                CORNERS.put(validRoomCount, allFourCornerList);
                 placeSingleRandomRoom(world);
             }
         }
+        //System.out.println(CORNERS);
     }
 
     public static void placeSingleRandomRoom(TETile[][] world) {
-        System.out.println(COORDINATES);
         int x = COORDINATES.getLast().get(0);
-        System.out.println(x);
         int y = COORDINATES.getLast().get(1);
         int roomWidth = DIMENSIONS.getLast().get(0);
         int roomHeight = DIMENSIONS.getLast().get(1);
@@ -82,7 +104,6 @@ public class Rooms {
     }
 
     public boolean roomOverlapChecker(TETile[][] world) {
-        System.out.println(COORDINATES);
         int choosenX = COORDINATES.getLast().get(0);
         int choosenY = COORDINATES.getLast().get(1);
         int roomWidth = DIMENSIONS.getLast().get(0);
@@ -101,7 +122,6 @@ public class Rooms {
     }
 
     public void randomRoomDimensions() {
-        //ArrayList<List<Integer>> dimensions = new ArrayList<>();
         int roomWidth = randomDimension();
         int roomHeight = randomDimension();
         List<Integer> pair = new ArrayList<>();
@@ -114,7 +134,6 @@ public class Rooms {
     public void randomRoomCoordinates() {
         int boardWidth = BOARDWIDTH - 2;
         int boardHeight = BOARDHEIGHT - 2;
-        //ArrayList<List<Integer>> coordinates = new ArrayList<>();
         Random random = new Random();
         int x = random.nextInt(boardWidth - 3) + 3;
         int y = random.nextInt(boardHeight - 3) + 3;
