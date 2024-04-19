@@ -4,10 +4,9 @@ import org.checkerframework.checker.units.qual.C;
 import tileengine.TERenderer;
 import tileengine.TETile;
 import tileengine.Tileset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
+
 
 public class Rooms {
     private static final int MINDIMENSION = 4;
@@ -18,6 +17,10 @@ public class Rooms {
     public static final ArrayList<List<Integer>> DIMENSIONS = new ArrayList<>();
     public static final HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>();
     //hashmap of all the rooms in order as keys and then the 4 corners as values
+    //RoomtoHallway connection
+    Map.Entry<Integer, ArrayList<List<Integer>>> cornersFirstInd = CORNERS.entrySet().iterator().next();
+    Integer cornersFirstKey = cornersFirstInd.getKey();
+    ArrayList<List<Integer>> cornersFirstValue = cornersFirstInd.getValue();
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
@@ -79,7 +82,6 @@ public class Rooms {
                 placeSingleRandomRoom(world);
             }
         }
-        //System.out.println(CORNERS);
     }
 
     public static void placeSingleRandomRoom(TETile[][] world) {
@@ -148,21 +150,21 @@ public class Rooms {
         Random random = new Random();
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
     }
+    public void roomtohallwayConnection(Hallways.QuickFindUF unionfind,int x, int y) {
+        for (x = 0; x < CORNERS.size(); x++) {
+            for (y = 0; y < CORNERS.size(); y++) {
+            CORNERS.get(x).get(y).
+
+            if (roomsConnected)
+
+        //HorizontalHallway Helper
+        private void horizontalHelper(int xStart, int xEnd)
+                
+        //VerticalHallway Helper
+        private void verticalHelper(int xStart, int xEnd)
+
+            }
+
+    }
 }
-
-//Method to use Hallways in QuickFind in Rooms take points in room1 and room2  and
-//connect those two points in hallway 2
-
-
-
-//Treemap
-//Reference for each room a list of room have a list  of room s and go through each room and a way you
-//can reference it and draw a path of reference point to the rooms
-
-//disjoint set --> still need to a reference which is an arraylist
-// or do a treemap
-
-//choose a lower left corner of each room and make the path that way to a hallway
-
-//First Value of hashmap
 

@@ -4,6 +4,8 @@ import java.util.Random;
 
 
 public class Hallways {
+    private static final int HALLWAYSWIDTH = 1;
+
     public class QuickFindUF {
         private int[] id;
 
@@ -15,52 +17,52 @@ public class Hallways {
         }
 
         /* Returns the size of the set P belongs to. */
-        public int sizeOf(int p) {
-            return Math.abs(id[find(p)]);
+        public int sizeOf(int room) {
+            return Math.abs(id[find(room)]);
         }
 
-        /* Returns true if nodes/vertices P1 and P2 are connected. */
-        public boolean roomsConnected(int p1, int p2) {
-            return find(p1) == find(p2);
+        /* Returns true if nodes/vertices room1 and room2 are connected. */
+        public boolean roomsConnected(int room1, int room2) {
+            return find(room1) == find(room2);
         }
 
-        /* Returns the root of the set P point belongs to. Path-compression is employed
+        /* Returns the id of the set room belongs to. Path-compression is employed
            allowing for fast search-time.
          */
-        public int find(int p) {
-            if (p < 0) {
+        public int find(int room) {
+            if (room < 0) {
                 throw new IllegalArgumentException("Out of bounds dawg");
             }
-            if (p >= id.length) {
+            if (room >= id.length) {
                 throw new IllegalArgumentException("Out of Bounds dawg");
             }
-            if (id[p] < 0) {
-                return p;
+            if (id[room] < 0) {
+                return room;
             }
-            id[p] = find(id[p]);
-            return id[p];
+            id[room] = find(id[room]);
+            return id[room];
         }
 
-        /* Connects two items P1 and P2 together by connecting their respective
-           sets. P1 and P2 can be any element, and a union-by-size heuristic is
-           used. If the sizes of the sets are equal, tie break by connecting P1's
-           root to P2's root.
+        /* Connects two items room1 and room2 together by connecting their respective
+           sets. room1 and room2 can be any element, and a union-by-size heuristic is
+           used. If the sizes of the sets are equal, tie break by connecting room1's
+           root to room2's root.
          */
-        public void union(int p1, int p2) {
-            int setOne = sizeOf(p1);
-            int setTwo = sizeOf(p2);
+        public void union(int room1, int room2) {
+            int setOne = sizeOf(room1);
+            int setTwo = sizeOf(room2);
 
-            if (!roomsConnected(p1, p2) && setOne == setTwo) {
-                id[find(p2)] += id[find(p1)];
-                id[find(p1)] = find(p2);
+            if (!roomsConnected(room1, room2) && setOne == setTwo) {
+                id[find(room2)] += id[find(room1)];
+                id[find(room1)] = find(room2);
             }
             if (setOne > setTwo) {
-                id[find(p1)] += id[find(p2)];
-                id[find(p2)] = find(p1);
+                id[find(room1)] += id[find(room2)];
+                id[find(room2)] = find(room1);
             }
             if (setOne < setTwo) {
-                id[find(p2)] += id[find(p1)];
-                id[find(p1)] = find(p2);
+                id[find(room2)] += id[find(room1)];
+                id[find(room1)] = find(room2);
             }
         }
     }
