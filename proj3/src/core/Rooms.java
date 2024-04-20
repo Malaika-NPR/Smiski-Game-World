@@ -17,10 +17,6 @@ public class Rooms {
     public static final ArrayList<List<Integer>> DIMENSIONS = new ArrayList<>();
     public static final HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>();
     //hashmap of all the rooms in order as keys and then the 4 corners as values
-    //RoomtoHallway connection
-    Map.Entry<Integer, ArrayList<List<Integer>>> cornersFirstInd = CORNERS.entrySet().iterator().next();
-    Integer cornersFirstKey = cornersFirstInd.getKey();
-    ArrayList<List<Integer>> cornersFirstValue = cornersFirstInd.getValue();
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
@@ -84,12 +80,9 @@ public class Rooms {
                 placeSingleRandomRoom(world);
             }
         }
-<<<<<<< HEAD
-=======
         wallGeneration(world);
         System.out.println(DIMENSIONS);
         System.out.println(CORNERS);
->>>>>>> 6ad6c8a190b2851d7f51c67af7d51e6788c159f0
     }
 
     public static void placeSingleRandomRoom(TETile[][] world) {
@@ -194,13 +187,11 @@ public class Rooms {
             if (roomsConnected)
 
         //HorizontalHallway Helper
-        private void horizontalHelper(int xStart, int xEnd)
+        private void horizontalHelper(int xStart, int yEnd)
 
         //VerticalHallway Helper
-        private void verticalHelper(int xStart, int xEnd)
-
-            }
-
+        private void verticalHelper(int yStart, int xEnd)
+                for (int y = Math.Min(yStart, yEnd);
     }
 }
 
