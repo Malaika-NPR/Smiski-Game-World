@@ -4,10 +4,9 @@ import org.checkerframework.checker.units.qual.C;
 import tileengine.TERenderer;
 import tileengine.TETile;
 import tileengine.Tileset;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+
+import java.util.*;
+
 
 public class Rooms {
     private static final int MINDIMENSION = 4; // min + max: room randomization w+h
@@ -182,4 +181,19 @@ public class Rooms {
         Random random = new Random();
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
     }
+    public void roomtohallwayConnection(Hallways.QuickFindUF unionfind,int x, int y) {
+        for (x = 0; x < CORNERS.size(); x++) {
+            for (y = 0; y < CORNERS.size(); y++) {
+            CORNERS.get(x).get(y).
+
+            if (roomsConnected)
+
+        //HorizontalHallway Helper
+        private void horizontalHelper(int xStart, int yEnd)
+
+        //VerticalHallway Helper
+        private void verticalHelper(int yStart, int xEnd)
+                for (int y = Math.Min(yStart, yEnd);
+    }
 }
+
