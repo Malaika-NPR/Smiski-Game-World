@@ -10,14 +10,13 @@ import java.util.List;
 import java.util.Random;
 
 public class Rooms {
-    private static final int MINDIMENSION = 4;
+    private static final int MINDIMENSION = 4; // min + max: room randomization w+h
     private static final int MAXDIMENSION = 13;
-    private static final int BOARDWIDTH = 75;
+    private static final int BOARDWIDTH = 75; //dimensions of board
     private static final int BOARDHEIGHT = 30;
-    public static final ArrayList<List<Integer>> COORDINATES = new ArrayList<>();
-    public static final ArrayList<List<Integer>> DIMENSIONS = new ArrayList<>();
-    public static final HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>();
-    //hashmap of all the rooms in order as keys and then the 4 corners as values
+    public static final ArrayList<List<Integer>> COORDINATES = new ArrayList<>(); //list stores bottom left coord of room
+    public static final ArrayList<List<Integer>> DIMENSIONS = new ArrayList<>(); //w + h of room
+    public static final HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>(); //key: room id; val: 4 corners coord
 
     public static void main(String[] args) {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
@@ -154,6 +153,7 @@ public class Rooms {
         return true;
     }
 
+    //random dimension [w, h]; adds to DIMENSIONS
     public void randomRoomDimensions() {
         int roomWidth = randomDimension();
         int roomHeight = randomDimension();
@@ -164,6 +164,7 @@ public class Rooms {
         DIMENSIONS.add(pair);
     }
 
+    //random coordinate [x, y] within the board; adds to COORDINATES
     public void randomRoomCoordinates() {
         int boardWidth = BOARDWIDTH - 2;
         int boardHeight = BOARDHEIGHT - 2;
