@@ -47,7 +47,7 @@ public class Rooms {
                 DIMENSIONS.removeLast();
                 //rooms.randomRoomCoordinates();
             } else if (!rooms.roomOverlapChecker(world)) {
-                validRoomCount+= 1;
+                validRoomCount += 1;
                 //if it alr has a lot of rooms before hitting 14 then we break
                 int roomWidth = DIMENSIONS.getLast().get(0);
                 int roomHeight = DIMENSIONS.getLast().get(1);
@@ -100,7 +100,7 @@ public class Rooms {
     public static void wallGeneration(TETile[][] world) {
         for (int i = 1; i < CORNERS.size() + 1; i++) {
             //bottom
-            for (int x = CORNERS.get(i).getFirst().get(0) - 1; x <=  ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))); x++) {
+            for (int x = CORNERS.get(i).getFirst().get(0) - 1; x <= ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))); x++) {
                 //System.out.println("Width: " + DIMENSIONS.get(i - 1).getFirst());
                 //System.out.println("Xcoord: " + CORNERS.get(i).getFirst().get(0));
                 //System.out.println("Last: " + ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))));
@@ -108,17 +108,17 @@ public class Rooms {
                 world[x][y] = Tileset.WALL;
             }
             //top
-            for (int x = CORNERS.get(i).getFirst().get(0) - 1; x <=  ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))); x++) {
+            for (int x = CORNERS.get(i).getFirst().get(0) - 1; x <= ((DIMENSIONS.get(i - 1).getFirst()) + (CORNERS.get(i).getFirst().get(0))); x++) {
                 int y = CORNERS.get(i).getFirst().get(1) + DIMENSIONS.get(i - 1).get(1);
                 world[x][y] = Tileset.WALL;
             }
             //left
-            for (int y = CORNERS.get(i).getFirst().get(1); y <  ((DIMENSIONS.get(i - 1).get(1)) + (CORNERS.get(i).getFirst().get(1))); y++) {
+            for (int y = CORNERS.get(i).getFirst().get(1); y < ((DIMENSIONS.get(i - 1).get(1)) + (CORNERS.get(i).getFirst().get(1))); y++) {
                 int x = CORNERS.get(i).getFirst().get(0) - 1;
                 world[x][y] = Tileset.WALL;
             }
             //right
-            for (int y = CORNERS.get(i).getFirst().get(1); y <  ((DIMENSIONS.get(i - 1).get(1)) + (CORNERS.get(i).getFirst().get(1))); y++) {
+            for (int y = CORNERS.get(i).getFirst().get(1); y < ((DIMENSIONS.get(i - 1).get(1)) + (CORNERS.get(i).getFirst().get(1))); y++) {
                 int x = CORNERS.get(i).getFirst().get(0) + DIMENSIONS.get(i - 1).get(0);
                 world[x][y] = Tileset.WALL;
             }
@@ -176,24 +176,11 @@ public class Rooms {
 
         COORDINATES.add(pair);
     }
+
     //returns a random width within bounds
     public int randomDimension() {
         Random random = new Random();
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
-    }
-    public void roomtohallwayConnection(Hallways.QuickFindUF unionfind,int x, int y) {
-        for (x = 0; x < CORNERS.size(); x++) {
-            for (y = 0; y < CORNERS.size(); y++) {
-            CORNERS.get(x).get(y).
-
-            if (roomsConnected)
-
-        //HorizontalHallway Helper
-        private void horizontalHelper(int xStart, int yEnd)
-
-        //VerticalHallway Helper
-        private void verticalHelper(int yStart, int xEnd)
-                for (int y = Math.Min(yStart, yEnd);
     }
 }
 
