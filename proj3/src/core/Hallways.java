@@ -28,6 +28,7 @@ public class Hallways {
         }
     }
 
+<<<<<<< HEAD
     //dijkstra's algorithm to find shortest path using quickFind "roomConnecting"
     public HashMap<Integer, Integer> shortestPathFinder (HashMap<Integer, ArrayList<List<Integer>>> rooms, int sourceNode) {
         private int Dist[];
@@ -41,6 +42,12 @@ public class Hallways {
             Dist = new int[vertices];
             settled = new HashSet<Integer>();
             priorityqe = new PriorityQueue<Node>(vertices, new Node());
+=======
+        /* Returns the size of the set Room
+         belongs to. */
+        public int sizeOf(int room) {
+            return Math.abs(id[find(room)]);
+>>>>>>> b512b12700d736c60dcc131a73a62be7468c5a15
         }
         public void dikstra(List<List<Node>> adjacentNodes) {
             this.adjacentNodes = adjacentNodes;
