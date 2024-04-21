@@ -16,7 +16,8 @@ public class Hallways {
             }
         }
 
-        /* Returns the size of the set P belongs to. */
+        /* Returns the size of the set Room
+         belongs to. */
         public int sizeOf(int room) {
             return Math.abs(id[find(room)]);
         }

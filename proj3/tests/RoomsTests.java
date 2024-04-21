@@ -1,11 +1,11 @@
 import core.Rooms;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import tileengine.TETile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.google.common.truth.Truth.assertThat;
+//import static com.google.common.truth.Truth.assertThat;
 import static core.Rooms.*;
 
 public class RoomsTests {

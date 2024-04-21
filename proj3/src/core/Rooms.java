@@ -1,12 +1,9 @@
 package core;
 
-import org.checkerframework.checker.units.qual.C;
 import tileengine.TERenderer;
 import tileengine.TETile;
 import tileengine.Tileset;
-
 import java.util.*;
-
 
 public class Rooms {
     private static final int MINDIMENSION = 4; // min + max: room randomization w+h
@@ -39,7 +36,10 @@ public class Rooms {
         Rooms rooms = new Rooms();
         int validRoomCount = 0;
 
-        for (int r = 0; validRoomCount < 12; r++) {
+        Random random = new Random();
+        int randomRoomNumber = random.nextInt(12 - 5) + 5;
+
+        for (int r = 0; validRoomCount < randomRoomNumber; r++) {
             rooms.randomRoomDimensions();
             rooms.randomRoomCoordinates();
             if (rooms.roomOverlapChecker(world)) {
@@ -181,6 +181,7 @@ public class Rooms {
         Random random = new Random();
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
     }
+    /*
     public void roomtohallwayConnection(Hallways.QuickFindUF unionfind,int x, int y) {
         for (x = 0; x < CORNERS.size(); x++) {
             for (y = 0; y < CORNERS.size(); y++) {
@@ -194,6 +195,6 @@ public class Rooms {
         //VerticalHallway Helper
         private void verticalHelper(int yStart, int xEnd)
                 for (int y = Math.Min(yStart, yEnd);
-    }
+    } */
 }
 
