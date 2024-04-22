@@ -8,29 +8,11 @@ import java.util.*;
 public class Rooms {
     private static final int MINDIMENSION = 4; // min + max: room randomization w+h
     private static final int MAXDIMENSION = 13;
-    private static final int BOARDWIDTH = 75; //dimensions of board
-    private static final int BOARDHEIGHT = 30;
+    public static final int BOARDWIDTH = 75; //dimensions of board
+    public static final int BOARDHEIGHT = 30;
     public static final ArrayList<List<Integer>> COORDINATES = new ArrayList<>(); //list stores bottom left coord of room
     public static final ArrayList<List<Integer>> DIMENSIONS = new ArrayList<>(); //w + h of room
-    public static final HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>(); //key: room id; val: 4 corners coord
-
-    public static void main(String[] args) {
-        // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
-        TERenderer ter = new TERenderer();
-        ter.initialize(BOARDWIDTH, BOARDHEIGHT);
-
-        // initialize tiles
-        TETile[][] world = new TETile[BOARDWIDTH][BOARDHEIGHT];
-        for (int x = 0; x < BOARDWIDTH; x++) {
-            for (int y = 0; y < BOARDHEIGHT; y++) {
-                world[x][y] = Tileset.FLOWER;
-            }
-        }
-        placeRandomRooms(world);
-        //bottomWallGeneration(world);
-        //System.out.println(COORDINATES);
-        ter.renderFrame(world);
-    }
+    public static HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>(); //key: room id; val: 4 corners coord
 
     public static void placeRandomRooms(TETile[][] world) {
         Rooms rooms = new Rooms();
@@ -182,23 +164,5 @@ public class Rooms {
         Random random = new Random();
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
     }
-<<<<<<< HEAD
-=======
-    /*
-    public void roomtohallwayConnection(Hallways.QuickFindUF unionfind,int x, int y) {
-        for (x = 0; x < CORNERS.size(); x++) {
-            for (y = 0; y < CORNERS.size(); y++) {
-            CORNERS.get(x).get(y).
-
-            if (roomsConnected)
-
-        //HorizontalHallway Helper
-        private void horizontalHelper(int xStart, int yEnd)
-
-        //VerticalHallway Helper
-        private void verticalHelper(int yStart, int xEnd)
-                for (int y = Math.Min(yStart, yEnd);
-    } */
->>>>>>> b512b12700d736c60dcc131a73a62be7468c5a15
 }
 

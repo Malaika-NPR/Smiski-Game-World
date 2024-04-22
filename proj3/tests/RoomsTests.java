@@ -1,4 +1,5 @@
 import core.Rooms;
+import core.SeedHandler;
 import org.junit.Test;
 import tileengine.TETile;
 
@@ -45,5 +46,12 @@ public class RoomsTests {
     public void bottomWallGenerationTest() {
         placeRandomRooms(world);
         wallGeneration(world);
+    }
+    
+    @Test
+    public void seedParserTest() {
+        String inputSeed = "N123456789S";
+        long outputSeed = SeedHandler.seedParser(inputSeed);
+        System.out.println(outputSeed);
     }
 }
