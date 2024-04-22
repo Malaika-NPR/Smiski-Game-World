@@ -5,10 +5,7 @@ import edu.princeton.cs.algs4.QuickFindUF;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import org.w3c.dom.Node;
 import tileengine.TETile;
-<<<<<<< HEAD
-=======
 import tileengine.Tileset;
->>>>>>> 633e333673dbfe788c9cbee7e822cdd71b095739
 
 import java.util.*;
 
@@ -45,14 +42,12 @@ public class Hallways extends Rooms {
             }
         } */
     }
-<<<<<<< HEAD
 
     //dijkstra's algorithm to find shortest path using quickFind "roomConnecting"
     public HashMap<Integer, Integer> shortestPathFinder (HashMap<Integer, ArrayList<List<Integer>>> rooms, int sourceNode) {
-=======
+
     //Dijkstra's Graph Instantialization
     public class Graph {
->>>>>>> 633e333673dbfe788c9cbee7e822cdd71b095739
         private int Dist[];
         private int vertices;
         private List<List<Node>> adjacentNodes;
@@ -61,7 +56,6 @@ public class Hallways extends Rooms {
 
         public Graph(int vertices) {
             this.vertices = vertices;
-<<<<<<< HEAD
             Dist = new int[vertices];
             settled = new HashSet<Integer>();
             priorityqe = new PriorityQueue<Node>(vertices, new Node());
@@ -82,12 +76,10 @@ public class Hallways extends Rooms {
                     dkNeighbors(mD);
                 }
             }    }
-=======
             this.adjacentNodes = new ArrayList<>(vertices);
             this.settled = new HashSet<>();
             this.priorityqueue = new PriorityQueue<>();
         }
->>>>>>> 633e333673dbfe788c9cbee7e822cdd71b095739
 
         public void edgeCases(int startNode, int startPoint, int weight) {
             adjacentNodes.get(startNode).add(new Node(startPoint, weight));
@@ -123,11 +115,9 @@ public class Hallways extends Rooms {
                         Dist[vert.node] = newDistance;
                     priorityqueue.add(new Node(vert.node, Dist[vert.node]));
                 }
-<<<<<<< HEAD
                     return DKNEARESTPATH;
 
         }
-=======
             }
         }
 
@@ -185,7 +175,6 @@ public class Hallways extends Rooms {
         }
         world[positionDaisyX][positionDaisyY] = Tileset.FLOOR;
     }
->>>>>>> 633e333673dbfe788c9cbee7e822cdd71b095739
 
     //using shortestPathGenerator to generate hallways
     public void hallwayCreation (TETile[][] world, HashMap<Integer, ArrayList<List<Integer>>> rooms) {
