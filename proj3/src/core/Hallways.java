@@ -4,6 +4,7 @@ import edu.princeton.cs.algs4.Graph;
 import edu.princeton.cs.algs4.QuickFindUF;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 import org.w3c.dom.Node;
+import tileengine.TETile;
 
 import java.util.*;
 
@@ -28,7 +29,6 @@ public class Hallways {
         }
     }
 
-<<<<<<< HEAD
     //dijkstra's algorithm to find shortest path using quickFind "roomConnecting"
     public HashMap<Integer, Integer> shortestPathFinder (HashMap<Integer, ArrayList<List<Integer>>> rooms, int sourceNode) {
         private int Dist[];
@@ -42,27 +42,23 @@ public class Hallways {
             Dist = new int[vertices];
             settled = new HashSet<Integer>();
             priorityqe = new PriorityQueue<Node>(vertices, new Node());
-=======
-        /* Returns the size of the set Room
-         belongs to. */
-        public int sizeOf(int room) {
-            return Math.abs(id[find(room)]);
->>>>>>> b512b12700d736c60dcc131a73a62be7468c5a15
-        }
+
         public void dikstra(List<List<Node>> adjacentNodes) {
             this.adjacentNodes = adjacentNodes;
             for (int m = 0; m < vertices; m++) {
                 Dist[m] = Integer.MAX_VALUE;
-                priorityqe.add(new Node(sourceNode,0));
+                priorityqe.add(new Node(sourceNode, 0));
                 Dist[sourceNode] = 0;
-            while (settled.size() != vertices) {
-                if (priorityqe.isEmpty())
-                    return ;
-                int mD = priorityqe.remove().node;
-                if (settled.contains(mD));
-                continue;
-                settled.add(mD);
-                dkNeighbors(mD);
+                while (settled.size() != vertices) {
+                    if (priorityqe.isEmpty())
+                        return;
+                    int mD = priorityqe.remove().node;
+                    if (settled.contains(mD)) ;
+                    continue;
+                    settled.add(mD);
+                    dkNeighbors(mD);
+                }
+            }    }
 
         // Helper Method to process all the neighbors
         private void dkNeighbors(int mD) {
@@ -75,22 +71,9 @@ public class Hallways {
                     }
 
                 }
+                    return DKNEARESTPATH;
 
         }
-        return DKNEARESTPATH;
-    }
-
-    //path making btwn 2 rooms
-    public void generatePaths() {
-
-    }
-
-    public void
-
-    //adding generated path to world
-    public void floorToHallways() {
-
-    }
 
     //using shortestPathGenerator to generate hallways
     public void hallwayCreation (HashMap<Integer, ArrayList<List<Integer>>> rooms, HashMap<Integer, Integer> shortDistance) {
@@ -108,4 +91,3 @@ public class Hallways {
         }
     }
 }
-

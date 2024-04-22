@@ -182,8 +182,6 @@ public class Rooms {
         Random random = new Random();
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
     }
-<<<<<<< HEAD
-=======
     /*
     public void roomtohallwayConnection(Hallways.QuickFindUF unionfind,int x, int y) {
         for (x = 0; x < CORNERS.size(); x++) {
@@ -199,6 +197,5 @@ public class Rooms {
         private void verticalHelper(int yStart, int xEnd)
                 for (int y = Math.Min(yStart, yEnd);
     } */
->>>>>>> b512b12700d736c60dcc131a73a62be7468c5a15
 }
 
