@@ -25,4 +25,5 @@ public class WorldGenTests {
     public void basicSaveTest() {
         // TODO: write a test that calls getWorldFromInput twice, with "n123swasd:q" and with "lwasd"
     }
+
 }

@@ -1,5 +1,6 @@
 package core;
 
+import edu.princeton.cs.algs4.Graph;
 import tileengine.TERenderer;
 import tileengine.TETile;
 import tileengine.Tileset;
