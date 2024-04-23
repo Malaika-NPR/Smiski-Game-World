@@ -13,80 +13,62 @@ import java.util.*;
 
 public class Hallways extends Rooms {
     private static final int HALLWAYSWIDTH = 1;
-    //private static final HashMap<Integer, ArrayList<List<Integer>>> HALLWAYS = new HashMap<>(); //tracking hallways with shortest path
-    public static final HashMap<Integer, Integer> DKNEARESTPATH = new HashMap<>();
 
-    //using quickFind to connect rooms
-    public void roomConnecting(HashMap<Integer, ArrayList<List<Integer>>> rooms) {
-        WeightedQuickUnionUF weightedUF = new WeightedQuickUnionUF(rooms.size());
-        Set<Integer> roomsAsKeys = rooms.keySet();
-        Integer[] roomKeysArray = roomsAsKeys.toArray(new Integer[0]);
-
-        for (int f = 0; f < roomKeysArray.length; f++) {
-            for (int s = 0; s < roomKeysArray.length; s++) {
-                int roomOfFirstList = roomKeysArray[f];
-                int roomOfSecondList = roomKeysArray[s];
-                if (!weightedUF.connected(roomOfFirstList, roomOfSecondList)) {
-                    weightedUF.union(roomOfFirstList, roomOfSecondList); //adding method to check if should connect?
-                }
-            }
-        }
-
-        /* for (int roomOfFirstList : rooms.keySet()) {
-            for (int roomOfSecondList : rooms.keySet()) {
-                if (roomOfFirstList != roomOfSecondList) {
-                    if (!weightedUF.connected(roomOfFirstList, roomOfSecondList)) {
-                        weightedUF.union(roomOfFirstList, roomOfSecondList); //adding method to check if should connect?
-                    }
-                }
-            }
-        } */
-    }
     //Dijkstra's Graph Instantialization
+    // Dist[]        --> Reflects series of shortest distances
+    // nodes         --> Nodes / Rooms
+    //adjacentList   --> Represents graph where each element corresponds to vtx in graph
+    //shortestDistance        --> Used to keep track of nodes whose shortest distance has been finalized
+    //priority queue --> Efficient retrieval of the element with shortest distance
     public class Graph {
-        private int Dist[];
-        private int vertices;
-        private List<List<Node>> adjacentNodes;
-        private Set<Integer> settled;
+        private int[] Dist;
+        private int node;
+        private List<List<Node>> adjacentList;
+        private HashMap<Integer, Integer> DKNEARESTPATH = new HashMap<>();  //tracking hallways with shortest paths
         private PriorityQueue<Node> priorityqueue;
 
-        public Graph(int vertices) {
-            this.vertices = vertices;
-            this.adjacentNodes = new ArrayList<>(vertices);
-            this.settled = new HashSet<>();
+        public Graph(int node) {
+            this.node = node;
+            this.adjacentList = new ArrayList<>(node);
+            this.DKNEARESTPATH = new HashMap<>();
             this.priorityqueue = new PriorityQueue<>();
         }
 
-        public void edgeCases(int startNode, int startPoint, int weight) {
-            adjacentNodes.get(startNode).add(new Node(startPoint, weight));
+        //Edges are HallWays
+        public void addingEdges(int startNode, int endPoint, int distance) {
+            adjacentList.get(startNode).add(new Node(endPoint, distance));
+            adjacentList.get(endPoint).add(new Node(startNode, distance));
         }
 
-        //Implements Comparable and represents a node in the graph
+        //Creating the Node Class to use (Rooms)
         public class Node implements Comparable<Node> {
             public int node;
-            public int weight;
+            public int distance;
 
-            public Node(int node, int weight) {
+            public Node(int node, int distance) {
                 this.node = node;
-                this.weight = weight;
+                this.distance = distance;
             }
 
+            //In compareTo we compare weights, so for example if 3,4 are there the priority queue would choose either
+            //one based off what we want
             @Override
             public int compareTo(Node other) {
-                return Integer.compare(this.weight, other.weight);
+                return Integer.compare(this.distance, other.distance);
             }
         }
-       //DK Helper Cases to check neighbors
-        private void neighborsChecker(int dc) {
+
+        //DK Helper Cases to check neighbors
+        private void neighborsChecker(int currentvertex) {
             int edgeDistance = -1;
             int newDistance = -1;
 
-            //Verticies of all the neighbors
-            for (int m = 0; m < adjacentNodes.get(dc).size(); m++) {
-                Node vert = adjacentNodes.get(dc).get(m);
-                if (!settled.contains(vert.node)) {
-                    edgeDistance = vert.weight;
-                    newDistance = Dist[dc] + edgeDistance;
+            //Nodes of all the neighbors / check for all existing Hallways
+            for (int m = 0; m < adjacentList.get(currentvertex).size(); m++) {
+                Node vert = adjacentList.get(currentvertex).get(m);
+                if (!DKNEARESTPATH.containsKey(vert.node)) {
+                    edgeDistance = vert.distance;
+                    newDistance = Dist[currentvertex] + edgeDistance;
                     if (newDistance < Dist[vert.node])
                         Dist[vert.node] = newDistance;
                     priorityqueue.add(new Node(vert.node, Dist[vert.node]));
@@ -94,22 +76,22 @@ public class Hallways extends Rooms {
             }
         }
 
-         //Dijkstra's algorithm to find shortest path using quickFind "roomConnecting"
+//        Dijkstra's algorithm to find shortestpath
+//        Adjacency list representation of the connected edges by declaring list class
+//        Intialize a list for every node
         public HashMap<Integer, Integer> shortestPathFinder(int sourceNode) {
-            Dist = new int[vertices];
-            //Adjacency list representation of the connected edges by declaring list class
-            //Intialize a list for every node
-            for (int m = 0; m < vertices; m++) {
-                adjacentNodes.add(new ArrayList<>());
+            Dist = new int[node];
+            for (int m = 0; m < CORNERS.size(); m++) {
+                adjacentList.add(new ArrayList<>());
                 Dist[m] = Integer.MAX_VALUE;
             }
             priorityqueue.add(new Node(sourceNode, 0));
             while (!priorityqueue.isEmpty()) {
                 int mindist = priorityqueue.remove().node;
-                if (settled.contains(mindist)) {
+                if (DKNEARESTPATH.containsKey(mindist)) {
                     continue;
                 }
-                settled.add(mindist);
+                DKNEARESTPATH.put(mindist, Dist[mindist]);
                 neighborsChecker(mindist);
             }
             return DKNEARESTPATH;
@@ -119,11 +101,11 @@ public class Hallways extends Rooms {
     //path making btwn 2 rooms
     //roomACorner: using CORNERS in rooms
 
-    boolean horizontalHallwayChecker(List<Integer> from, List<Integer> to) {
+    public static boolean horizontalHallwayChecker(List<Integer> from, List<Integer> to) {
         return Math.abs(from.get(0) - to.get(0)) > Math.abs(from.get(1) - to.get(1));
     }
 
-    public void singleHallwayGenerator(TETile[][] world, ArrayList<List<Integer>> roomACorners, ArrayList<List<Integer>> roomBCorners) {
+    public static void singleHallwayGenerator(TETile[][] world, ArrayList<List<Integer>> roomACorners, ArrayList<List<Integer>> roomBCorners) {
         Random random = new Random();
         int roomARandom = random.nextInt(roomACorners.size());
         int roomBRandom = random.nextInt(roomACorners.size());
@@ -150,19 +132,34 @@ public class Hallways extends Rooms {
     }
 
     //using shortestPathGenerator to generate hallways
-    public void hallwayCreation (TETile[][] world, HashMap<Integer, ArrayList<List<Integer>>> rooms) {
-        rooms = CORNERS;
+    public void hallwayCreation(TETile[][] world, HashMap<Integer, ArrayList<List<Integer>>> rooms) {
         for (int roomOfFirstList : rooms.keySet()) {
             for (int roomOfSecondList : rooms.keySet()) {
-                if (roomOfFirstList != roomOfSecondList) {
-                    if (DKNEARESTPATH.containsKey(roomOfSecondList)) {
-                        ArrayList<List<Integer>> roomACorners = CORNERS.get(roomOfFirstList);
-                        ArrayList<List<Integer>> roomBCorners = CORNERS.get(roomOfSecondList);
+                if (roomOfFirstList < roomOfSecondList) {
+                }
+                        ArrayList<List<Integer>> roomACorners = rooms.get(roomOfFirstList);
+                        ArrayList<List<Integer>> roomBCorners = rooms.get(roomOfSecondList);
                         singleHallwayGenerator(world, roomACorners, roomBCorners);
                     }
                 }
             }
-        }
+
+//    public boolean roomOverlapChecker(TETile[][] world) {
+//            int choosenX = COORDINATES.getLast().get(0);
+//            int choosenY = COORDINATES.getLast().get(1);
+//            int roomWidth = DIMENSIONS.getLast().get(0);
+//            int roomHeight = DIMENSIONS.getLast().get(1);
+//            if (!roomOutBoundsChecker(world)) { //room is not out of bounds
+//                for (int a = choosenX - 3; a < choosenX + roomWidth + 3; a++) {
+//                    for (int b = choosenY - 3; b < choosenY + roomHeight + 3; b++) {
+//                        if (world[a][b] == Tileset.FLOOR) {
+//                            return true; //overlap
+//                        }
+//                    }
+//                }
+//                return false;
+//            }
+//            return true;
+//        }
     }
-}
 

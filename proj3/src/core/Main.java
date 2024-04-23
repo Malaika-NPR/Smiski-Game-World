@@ -19,7 +19,7 @@ public class Main {
         }
         Rooms.placeRandomRooms(world);
         Hallways hallways = new Hallways(); //connection generating
-        hallways.roomConnecting(Rooms.CORNERS);
+        //hallways.roomConnecting(Rooms.CORNERS);
         hallways.hallwayCreation(world, Rooms.CORNERS);
 
         ter.renderFrame(world);
