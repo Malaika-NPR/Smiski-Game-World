@@ -13,8 +13,10 @@ public class Rooms {
     public static final ArrayList<List<Integer>> COORDINATES = new ArrayList<>(); //list stores bottom left coord of room
     public static final ArrayList<List<Integer>> DIMENSIONS = new ArrayList<>(); //w + h of room
     public static HashMap<Integer, ArrayList<List<Integer>>> CORNERS = new HashMap<>(); //key: room id; val: 4 corners coord
-
+    
     public static void placeRandomRooms(TETile[][] world) {
+        //to carve into each room, once we place tile or visit coord, set equal to ineligible
+        //and continue carving until all tiles are ineligible
         Rooms rooms = new Rooms();
         int validRoomCount = 0;
 
@@ -164,5 +166,20 @@ public class Rooms {
         Random random = new Random();
         return random.nextInt(MAXDIMENSION - MINDIMENSION) + MINDIMENSION;
     }
+    /*
+    public void roomtohallwayConnection(Hallways.QuickFindUF unionfind,int x, int y) {
+        for (x = 0; x < CORNERS.size(); x++) {
+            for (y = 0; y < CORNERS.size(); y++) {
+            CORNERS.get(x).get(y).
+
+            if (roomsConnected)
+
+        //HorizontalHallway Helper
+        private void horizontalHelper(int xStart, int yEnd)
+
+        //VerticalHallway Helper
+        private void verticalHelper(int yStart, int xEnd)
+                for (int y = Math.Min(yStart, yEnd);
+    } */
 }
 
