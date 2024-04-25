@@ -10,6 +10,8 @@ public class OtherHallways {
     private static final Set<List<Integer>> verticalHallways = new HashSet<>();
     private static final Set<List<Integer>> horizontalHallways = new HashSet<>();
     private static final HashMap<List<Integer>, Integer> previousTileType = new HashMap<>();
+    public static final int BOARDWIDTH = 75; //dimensions of board
+    public static final int BOARDHEIGHT = 30;
 
     //creates the list with pairs of rooms to connect
     public static ArrayList<List<Integer>> randomConnection() {
@@ -39,6 +41,51 @@ public class OtherHallways {
             singleHallwayPlacement(world, path);
         }
     }
+
+    public static void placingFloors(TETile[][] world) {
+        for (ArrayList<List<Integer>> c : storedRooms.values()) {
+            //bottomLeftX, bottomLeftY, topRightX, topRightY
+            for (int x = c.getFirst().getFirst(); x <= c.get(2).getFirst(); x++) {
+                for (int y = c.getFirst().get(1); y <= c.get(2).get(1); y++) {
+                    world[x][y] = Tileset.FLOOR;
+                }
+            }
+        }
+    }
+
+    public static void hallwayWallGeneration(TETile[][] world) {
+        for (int x = 0; x < BOARDWIDTH; x++) {
+            for (int y = 0; y < BOARDHEIGHT; y++) {
+                if (needsWall(world, x, y)) {
+                    world[x][y] = Tileset.WALL;
+                }
+            }
+        }
+    }
+
+    public static void sandReplacement(TETile[][] world) {
+        for (int x = 0; x < BOARDWIDTH; x++) {
+            for (int y = 0; y < BOARDHEIGHT; y++) {
+                if (world[x][y] == Tileset.SAND) {
+                    world[x][y] = Tileset.FLOOR;
+                }
+            }
+        }
+    }
+
+    public static boolean needsWall(TETile[][] world, int x, int y) {
+        int boundX = world.length - 1;
+        int boundY = world[0].length - 1;
+        //check right
+        //check below
+        //check left
+        //check above
+        return world[x][y] == Tileset.FLOWER && ((x + 1 <= boundX && world[x + 1][y] == Tileset.SAND) ||
+                (y - 1 >= 0 && world[x][y - 1] == Tileset.SAND) ||
+                (x - 1 >= 0 && world[x - 1][y] == Tileset.SAND) ||
+                (y + 1 <= boundY && world[x][y + 1] == Tileset.SAND));
+    }
+
 
     public static void clearHallwayTiles(TETile[][] world, ArrayList<List<Integer>> hallwayCoordinates) {
         for (List<Integer> coordinate : hallwayCoordinates) {
@@ -82,7 +129,6 @@ public class OtherHallways {
                         } else {
                             //false: place tile
                             world[room1X][y] = Tileset.SAND;
-                            //existingHallways.add(Arrays.asList(room1X, y));
                         }
                     }
                     for (int x = room2X; x < room1X; x++) { //left but from room2
@@ -119,7 +165,6 @@ public class OtherHallways {
                         } else {
                             //false: place tile
                             world[x][room1Y] = Tileset.SAND;
-                            //existingHallways.add(Arrays.asList(x, room1Y));
                         }
                     }
                     for (int y = room2Y; y > room1Y; y--) { //up but from room2
@@ -133,12 +178,9 @@ public class OtherHallways {
                             for (int x = room2X; x < room1X; x++) {
                                 tileReplacer(world, x, room1Y);
                             }
-                            //generate process again
-                            //singleHallwayPlacement(world, bothRooms);
                         } else {
                             //false: place tile
                             world[room2X][y] = Tileset.SAND;
-                            //existingHallways.add(Arrays.asList(room2X, y));
                         }
                     }
                 }
@@ -170,9 +212,10 @@ public class OtherHallways {
                             for (int y = room1Y; y >= room2Y; y--) {
                                 tileReplacer(world, room1X, y);
                             }
+                        } else {
+                            //false: coast is clear
+                            world[x][room2Y] = Tileset.SAND;
                         }
-                        //false: coast is clear
-                        world[x][room2Y] = Tileset.SAND;
                     }
                 } else {
                     //left --> down
@@ -198,9 +241,10 @@ public class OtherHallways {
                             for (int x = room2X; x < room1X; x++) {
                                 tileReplacer(world, x, room1Y);
                             }
+                        } else {
+                            //false: coast is clear
+                            world[room2X][y] = Tileset.SAND;
                         }
-                        //false: coast is clear
-                        world[room2X][y] = Tileset.SAND;
                     }
                 }
             }
@@ -208,13 +252,14 @@ public class OtherHallways {
             else if (positionPath == 2) {
                 for (int x = room1X; x >= room2X; x--) {
                     //PLACING PREVIOUS TILE INTO HASHMAP
-                    previousTilePlacer(world, x, room2Y);
-                    if (horizontalNeighborChecker(world, x, room2Y)) {
-                        for (int prevX = x; prevX <= room1X; prevX++) {
-                            tileReplacer(world, prevX, room2Y);
+                    previousTilePlacer(world, x, room1Y);
+                    if (horizontalNeighborChecker(world, x, room1Y)) {
+                        for (int prevX = x; prevX < room1X; prevX++) { //TOOK OFF EQUAL
+                            tileReplacer(world, prevX, room1Y);
                         }
+                    } else {
+                        world[x][room1Y] = Tileset.SAND;
                     }
-                    world[x][room2Y] = Tileset.SAND;
                 }
             }
             //room2 lower right
@@ -243,7 +288,7 @@ public class OtherHallways {
                                 tileReplacer(world, room1X, y);
                             }
                         } else {
-                            world[x][room2Y] = Tileset.SAND;
+                            world[x][room2Y] = Tileset.SAND; //FLAG
                         }
                     }
                 } else {
@@ -262,16 +307,16 @@ public class OtherHallways {
                     for (int y = room2Y; y < room1Y; y++) { //down but drawing from room2
                         //PLACING PREVIOUS TILE INTO HASHMAP
                         previousTilePlacer(world, room2X, y);
-                        if (verticalNeighborChecker(world, room2X, y)) {
+                        if (verticalNeighborChecker(world, room2X, y)) { //FLAG
                             for (int prevY = y; prevY >= room2Y; prevY--) {
                                 tileReplacer(world, room2X, prevY);
                             }
                             for (int x = room1X; x < room2X; x++) { //right
                                 tileReplacer(world, x, room1Y);
                             }
+                        } else {
+                            world[room2X][y] = Tileset.SAND;
                         }
-                        world[room2X][y] = Tileset.SAND;
-                        //existingHallways.add(Arrays.asList(room2X, y));
                     }
                 }
             }
@@ -337,13 +382,13 @@ public class OtherHallways {
             } else if (positionPath == 5) {
                 for (int x = room1X; x <= room2X; x++) {
                     //PLACING PREVIOUS TILE INTO HASHMAP
-                    previousTilePlacer(world, x, room2Y);
-                    if (horizontalNeighborChecker(world, x, room2Y)) {
+                    previousTilePlacer(world, x, room1Y);
+                    if (horizontalNeighborChecker(world, x, room1Y)) {
                         for (int prevX = x; prevX >= room1X; prevX--) {
-                            tileReplacer(world, prevX, room2Y);
+                            tileReplacer(world, prevX, room1Y);
                         }
                     } else {
-                        world[x][room2Y] = Tileset.SAND;
+                        world[x][room1Y] = Tileset.SAND;
                     }
                 }
             }
@@ -391,18 +436,33 @@ public class OtherHallways {
             world[x][y] = Tileset.SAND;
         } else if (tileType == 2) {
             world[x][y] = Tileset.FLOWER;
+        } else if (tileType == 3) {
+            world[x][y] = Tileset.WALL;
         }
     }
 
     //used to check adjacent tiles
+    //y + 1<= boundY && world[x][y + 1] == Tileset.SAND || y - 1 >= 0 && world[x][y - 1] == Tileset.SAND ||
     private static boolean horizontalNeighborChecker(TETile[][] world, int x, int y) {
+        int boundX = world.length - 1;
         int boundY = world[0].length - 1;
-        return y + 1<= boundY && world[x][y + 1] == Tileset.SAND || y - 1 >= 0 && world[x][y - 1] == Tileset.SAND;
+        return (world[x - 1][y + 1] == Tileset.SAND && world[x][y + 1] == Tileset.SAND) ||
+                (world[x + 1][y + 1] == Tileset.SAND && world[x][y + 1] == Tileset.SAND) ||
+                (world[x][y - 1] == Tileset.SAND && world[x + 1][y - 1] == Tileset.SAND) ||
+                (world[x][y - 1] == Tileset.SAND && world[x - 1][y - 1] == Tileset.SAND);
+                //world[x][y] == Tileset.WALL && world[x + 1][y] == Tileset.WALL||
+                //world[x][y] == Tileset.WALL && world[x - 1][y] == Tileset.WALL;
     }
     //used to check adjacent tiles
+    //x - 1 >= 0 && world[x - 1][y] == Tileset.SAND || x + 1 <=boundX && world[x + 1][y] == Tileset.SAND
     private static boolean verticalNeighborChecker(TETile[][] world, int x, int y) {
         int boundX = world.length - 1;
-        return x - 1 >= 0 && world[x - 1][y] == Tileset.SAND || x + 1 <=boundX && world[x + 1][y] == Tileset.SAND;
+        return (world[x - 1][y + 1] == Tileset.SAND && world[x - 1][y] == Tileset.SAND) ||
+                (world[x - 1][y - 1] == Tileset.SAND && world[x - 1][y] == Tileset.SAND) ||
+                (world[x + 1][y + 1] == Tileset.SAND && world[x + 1][y] == Tileset.SAND) ||
+                (world[x + 1][y - 1] == Tileset.SAND && world[x + 1][y] == Tileset.SAND);
+                //world[x][y] == Tileset.WALL && world[x][y + 1] == Tileset.WALL ||
+                //world[x][y] == Tileset.WALL && world[x][y - 1] == Tileset.WALL;
     }
 
     //returns a number for type of tile
@@ -414,6 +474,8 @@ public class OtherHallways {
             return type += 1;
         } else if (world[x][y] == Tileset.FLOWER) {
             return type += 2;
+        } else if (world[x][y] == Tileset.WALL) {
+            return type += 3;
         }
         return type;
     }

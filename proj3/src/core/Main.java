@@ -7,8 +7,7 @@ import tileengine.Tileset;
 import java.util.ArrayList;
 import java.util.List;
 
-import static core.OtherHallways.randomConnection;
-import static core.OtherHallways.randomRoomCoordinates;
+import static core.OtherHallways.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,10 +22,16 @@ public class Main {
                 world[x][y] = Tileset.FLOWER;
             }
         }
+        //String seed = "N12345678910S";
+        //private static long SEED = SeedHandler.seedParser(seed);
+
         Rooms.placeRandomRooms(world);
         OtherHallways hallways = new OtherHallways(); //connection generating
         //hallways.roomConnecting(Rooms.CORNERS);
         OtherHallways.hallwayGeneration(world);
+        OtherHallways.placingFloors(world);
+        OtherHallways.hallwayWallGeneration(world);
+        OtherHallways.sandReplacement(world);
 
         ter.renderFrame(world);
 
