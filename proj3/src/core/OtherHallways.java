@@ -117,7 +117,7 @@ public class OtherHallways {
         else if (positionPath == 4) {
             //world[room1X][room1Y] = Tileset.FLOOR; //placing tile at the start
             if (wheelChooser == 1) {
-        //place tiles going up --> right
+                //place tiles going up --> right
                 for (int y = room1Y; y <= room2Y; y++) { //up
                     world[room1X][y] = Tileset.GRASS;
                 }
@@ -125,7 +125,7 @@ public class OtherHallways {
                     world[x][room2Y] = Tileset.GRASS;
                 }
             } else {
-        //place tiles going right --> up
+                //place tiles going right --> up
                 for(int x = room1X; x <= room2X; x++) { //right
                     world[x][room1Y] = Tileset.GRASS;
                 }
@@ -133,7 +133,7 @@ public class OtherHallways {
                     world[room2X][y] = Tileset.GRASS;
                 }
             }
-        //room 5 straight across to right
+            //room 5 straight across to right
         } else if (positionPath == 5) {
             for (int x = room1X; x <= room2X; x++) {
                 world[x][room2Y] = Tileset.GRASS;
@@ -229,7 +229,7 @@ public class OtherHallways {
                 numberDecider += 2;
                 return numberDecider;
             }
-        //right
+            //right
         } else if (room1.get(0) < room2.get(0)) { // if room2 right
             if (room1.get(1) > room2.get(1)) { //lower right
                 numberDecider += 3;
