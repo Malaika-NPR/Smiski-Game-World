@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import tileengine.TERenderer;
 import tileengine.TETile;
 
+import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,5 +54,11 @@ public class HallwaysTests {
         System.out.println(unionList);
         System.out.println("Path # Below");
         System.out.println(OtherHallways.pathTrajectory(unionList.get(0), unionList.get(1)));
+    }
+
+    @Test
+    public void horizontalNeighborCheck() {
+        Rooms.placeRandomRooms(world);
+        //OtherHallways.horizontalNeighborChecker();
     }
 }

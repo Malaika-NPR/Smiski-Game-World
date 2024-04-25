@@ -31,7 +31,7 @@ public class AutograderBuddy {
      */
     public static boolean isGroundTile(TETile t) {
         return t.character() == Tileset.FLOOR.character()
-                || t.character() == Tileset.AVATAR.character()
+                //|| t.character() == Tileset.AVATAR.character()
                 || t.character() == Tileset.FLOWER.character();
     }
 

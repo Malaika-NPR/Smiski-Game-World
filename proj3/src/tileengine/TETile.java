@@ -99,6 +99,7 @@ public class TETile {
                 StdDraw.picture(x + 0.5, y + 0.5, filepath);
                 return;
             } catch (IllegalArgumentException e) {
+                System.out.println("Image Broke");
                 // Exception happens because the file can't be found. In this case, fail silently
                 // and just use the character and background color for the tile.
             }
