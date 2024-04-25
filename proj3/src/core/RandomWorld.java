@@ -35,8 +35,9 @@ public class RandomWorld {
         // the result is bounded between 0, inclusive, and 3, exclusive. (0, 1, or 2)
         int tileNum = RANDOM.nextInt(3);
         return switch (tileNum) {
-            case 0 -> Tileset.WALL;
-            case 1 -> Tileset.FLOWER;
+           case 0 -> Tileset.AVATAR;
+           // case 1 -> Tileset.FLOWER;
+            case 1 -> Tileset.RUBY;
             default -> Tileset.NOTHING;
         };
     }
